@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'accounts',
     'django_nvd3',
     'djangobower',
+    'visualisation',
+    'chartjs',
 ]
 
 MIDDLEWARE = [

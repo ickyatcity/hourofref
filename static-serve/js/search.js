@@ -23,23 +23,72 @@ function getParameterByName(name, url) {
 
 // Start
 
-$(document.body).on("click", "#score-up-detail", function(e){
+// $(document.body).on("click", "#score-up-detail", function(e){
+// 	e.preventDefault()
+// 	var this_ = $(this)
+// 	var tweetId = this_.attr("data-id")
+// 	var scoreupUrl = $(location).attr('href');
+// 	var finalScore;
+
+// 	var pathname = window.location.pathname; 
+// 	var scoreupUrl = '/api' + pathname +'scoreup/'
+
+// 	// console.log(this_)
+// 	this_.text =("Liked")
+// 	$("#score-up-detail").text(this_.text) ;
+// 	this_.addClass("btn btn-success btn-sm icon ion-arrow-up-a m-1").removeClass('btn btn-light m-1');
+ 
+
+//     console.log("urlx", scoreupUrl)
+
+//     $.ajax({
+//         method:"GET",
+//         url: scoreupUrl,
+
+//         success: function(data){
+//           if (data){
+//            finalScore = data.finalscore
+//            console.log('finalScore',finalScore)
+//            $("#score-net").text(finalScore);
+//           }
+//         },
+//         error: function(data){
+//           console.log("error from here ")	
+//           console.log(data)
+//         }
+
+//       })
+// })
+
+
+
+$(document.body).on("click", "#topic", function(e){
 	e.preventDefault()
-
-	$('#score-down-detail').attr("disabled", true);
-
 	var this_ = $(this)
-	var tweetId = this_.attr("data-id")
 	var scoreupUrl = $(location).attr('href');
 	var finalScore;
 
 	var pathname = window.location.pathname; 
 	var scoreupUrl = '/api' + pathname +'scoreup/'
 
+	$('#topic').upvote();
+	$('#topic').upvote({count: 5, upvoted: 1});
+	$('#topic').upvote({count: 5, downvoted: 1});
+	$('#topic').upvote({count: 5, upvoted: 1, starred: 1});
+
+	$('#topic').upvote('upvoted');      // Get the upvoted state -> boolean
+	$('#topic').upvote('downvoted');    // Get the downvoted state -> boolean
+    $('#topic').upvote();
+
+	// Mutators
+	$('#topic').upvote('upvote');       // Upvote!
+	$('#topic').upvote('downvote');     // Downvote!
+
+
 	// console.log(this_)
 	this_.text =("Liked")
 	$("#score-up-detail").text(this_.text) ;
-	this_.addClass("btn btn-success btn-sm icon ion-arrow-up-a m-1").removeClass('btn btn-light m-1');
+	// this_.addClass("btn btn-success btn-sm icon ion-arrow-up-a m-1").removeClass('btn btn-light m-1');
  
 
     console.log("urlx", scoreupUrl)
@@ -52,18 +101,15 @@ $(document.body).on("click", "#score-up-detail", function(e){
           if (data){
            finalScore = data.finalscore
            console.log('finalScore',finalScore)
-           $("#score-net").text(finalScore);
+           $("#data-id").text(finalScore);
           }
         },
         error: function(data){
           console.log("error from here ")	
           console.log(data)
         }
-
       })
 })
-
-
 
 
 
@@ -151,8 +197,6 @@ $(document).ready(function(){
 	   			 fetchCandidate(nextCandidateUrl)
 	   		}
 	   })
-
-
 
 }); // end
 

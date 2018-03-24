@@ -42,4 +42,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^api/candidates/', include('candidateapp.api.urls', namespace='candiateapp-api')),
+    url(r'^visualisation/', include('visualisation.urls', namespace='visualisation')),
+    # url(r'^api/graph/', include('visualisation.api.urls', namespace='graph-api')),
 ]
