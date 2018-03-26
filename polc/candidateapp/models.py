@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
 
 class CandidatesScoreManager(models.Manager):
@@ -103,8 +105,65 @@ class CandidatesWiki(models.Model):
 class CandidateUserRelx(models.Model):
     candidate_id = models.ForeignKey(CandidatesWiki,  on_delete=models.CASCADE)
     users = models.ForeignKey(settings.AUTH_USER_MODEL)
-   
+    updated     = models.DateTimeField(auto_now=True)
+    timestamp   = models.DateTimeField(auto_now_add=True)
     objects = CandidatesScoreManager()
+
+
+class CandidateScoreHist(models.Model):
+    candidate_id = models.ForeignKey(CandidatesWiki, on_delete=models.CASCADE)
+    score = models.IntegerField()
+    timestamp   = models.DateTimeField(auto_now_add=True)
+    updated     = models.DateTimeField(auto_now=True)
+
+
+
+
+
+# @receiver(post_save, sender=CandidatesWiki, dispatch_uid=create_user_scorehist)
+def create_user_scorehist(sender, instance, update_fields,  **kwargs):
+    if 'score_up' in update_fields:
+            CandidateScoreHist.objects.create(kwargs=['instance'])
+
+            # instance.score = instance.candidate_id.score
+    print 'I am here being updated'        
+
+
+post_save.connect(create_user_scorehist, sender=CandidatesWiki, dispatch_uid="create_user_scorehist")
+
+# post_save.connect(create_user_scorehist, sender=CandidatesWiki)
+
+
+
+    # @receiver(post_save, sender=CandidatesWiki)
+    # def save_user_profile(sender, instance, update_fields=['score'] **kwargs):
+    #     instance.profile.save()
+
+
+
+
+
+   # from django.db.models.signals import post_save
+   #  def default_subject(sender, instance, using):
+   #      instance.price = instance.product.price
+   #  pre_save.connect(default_subject, sender=Sell)
+
+
+   #  # @receiver(post_save, sender=User)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Profile.objects.create(user=instance)
+
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(sender, instance, **kwargs):
+    # instance.profile.save()
+
+
+    # def save(self, *args, **kwargs):
+    #     self.score = self.CandidatesWiki.score
+    #     super(CandidateScoreHist, self).save(*args, **kwargs)
+
+
 
 
 class Candidate(models.Model):

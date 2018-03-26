@@ -119,20 +119,36 @@ $(document).ready(function(){
     var query = getParameterByName('q')
     var candidateList = [];
     var nextCandidateUrl;
+    var pathname = window.location.pathname; 
+	var scoreupUrl = pathname
+
 
     function candidateAttach(value){
 		var candidateId = value.candidate_id;
 		var candidateName = value.candiate_name; 
 		var candidateSummary = value.summary_wiki;
-		var candidateUrl = value.urlreturn;
+		var candidateUrl = value.slug;
 		var candidateScoreUp = value.score_up;
 		var candidateScoreDown = value.score_down;
 		var candidateScore = value.score;
 
+		var oldURL = window.location.pathname; 
+		var index = 0;
+		var newURL = oldURL;
+		index = oldURL.indexOf('search');
+
+		if(index == -1){
+		    index = oldURL.indexOf('candidateUrl');
+		}
+		if(index != -1){
+		    newURL = oldURL.substring(0, index);
+		}
+		newURL = newURL + candidateUrl
+
 		var candidateHtmlForm ="<div class=\"media\"><div class =\"media-left\">" 
 		 + candidateName 	+ "<br/>"
 		 + candidateSummary + "<br/>"
-		 +"<a href='" + candidateUrl + "'> See detailss </a>"
+		 +"<a href='" + newURL + "'> See detailsx </a>"
 		 +"</div> </div><hr/>";
 
 	    $("#candidate-search-results").append(candidateHtmlForm);

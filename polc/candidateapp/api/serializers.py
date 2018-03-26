@@ -1,6 +1,7 @@
 from django.utils.timesince import timesince
 from rest_framework import serializers
 from django.urls import reverse_lazy
+from django.urls import reverse
 
 # from accounts.api.serializers import UserDisplaySerializer
 from candidateapp.models import CandidatesWiki
@@ -17,12 +18,7 @@ from candidateapp.models import CandidatesWiki
 
 
 class CandidateModelSerializer(serializers.ModelSerializer):
-	 urlreturn = serializers.SerializerMethodField()
-	 # candiduserrel  = serializers.SerializerMethodField()
-
-	 # candiduserrel = CandidateUserSerializer()
-
-
+	 # urlreturn = serializers.SerializerMethodField()
 	 class Meta:
 			model = CandidatesWiki
 			fields = [
@@ -39,18 +35,12 @@ class CandidateModelSerializer(serializers.ModelSerializer):
 				'score',
 				'score_up',
 				'score_down',
-				# 'candiduserrel',
-				'urlreturn',
+				# 'urlreturn',
 				'slug',
 				]
-		   
-	# def get_url(self, obj):
-	#     return reverse_lazy("profiles:detail", kwargs={"username": obj.username })
-	 # def get_candiduserrel(self, obj):
-		# 	return CandidateUserRelx.objects.all()
 
-	 def get_urlreturn(self, obj):
-			  return reverse_lazy("candidatesapp:candidatedetail", kwargs={"slug":obj.slug})
 
+	 # def get_urlreturn(self, obj):
+		# 	  return obj.get_absolute_url()
 
 

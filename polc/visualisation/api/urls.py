@@ -5,13 +5,11 @@ from django.views.generic.base import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
-# from .views import (
-#     CandidatesWikiListAPIView,
-#     ScoreToggleUpAPIView
-# )
+from .views import (
+    graphAPIView
+)
 
-# urlpatterns = [
-#       url(r'^$', CandidatesWikiListAPIView.as_view(), name='candidatelist'), 
-#       url(r'^(?P<slug>[\w-]+)/scoreup/$',ScoreToggleUpAPIView.as_view(), name='scoreup'),
-#       # url(r'^(?P<pk>\d+)/scorxeup/$', ScoreToggleUpAPIView.as_view(), name='scoreup'),
-# ]
+urlpatterns = [
+      url(r'^(?P<candidate_id>\d+)/disp/$', graphAPIView.as_view(), name='graph'), 
+]
+
